@@ -5,14 +5,27 @@ import requests
 today = date.today()
 
 # Weather
-weather = requests.get(
-    "https://wttr.in/Thiruvananthapuram?format=3"
-).text
+try:
+    weather = requests.get(
+        "https://wttr.in/Thiruvananthapuram?format=3&m",
+        timeout=10
+    ).text
+except Exception:
+    weather = "Weather unavailable"
 
 # Quote
-quote_data = requests.get(
-    "https://zenquotes.io/api/random"
-).json()
+try:
+    quote_data = requests.get(
+        "https://zenquotes.io/api/random",
+        timeout=10
+    ).json()
+
+    quote = quote_data[0]["q"]
+    author = quote_data[0]["a"]
+
+except Exception:
+    quote = "Keep learning and keep building."
+    author = "Task Bot"
 
 quote = quote_data[0]["q"]
 author = quote_data[0]["a"]
